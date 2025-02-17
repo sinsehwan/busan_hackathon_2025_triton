@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -48,12 +49,12 @@ public class ChatController {
         chatMessage.setMessage(message);
         chatMessage.setChatId(cid);
         chatMessage.setSenderId(senderId);
+        chatMessage.setMtime(LocalDateTime.now());
         // 메시지 broadcast 위해 전송.
         messagingTemplate.convertAndSend(destination, chatMessage);
         //DB에 메시지 추가
         ChatMessage result = chatService.saveMessage(chatMessage);
         System.out.println(result.getChatId());
-
     }
 
     /**
