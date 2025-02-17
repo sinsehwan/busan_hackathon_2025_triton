@@ -1,0 +1,10 @@
+@import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css');
+@import "reset.css";
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'NanumGothic', sans-serif;
+}
