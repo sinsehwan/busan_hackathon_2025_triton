@@ -44,8 +44,8 @@ public class ChatController {
      * @param cid
      * @param message
      */
-    @MessageMapping("/{cid}/sendMessage")
-    public void sendMessage(@DestinationVariable("cid") Long cid, String message){
+    @MessageMapping("/{cid}/sendMessage/{senderId}")
+    public void sendMessage(@DestinationVariable("cid") Long cid, @DestinationVariable("senderId") Long senderId, String message){
         String destination = "/topic/messages/" + cid;
         // 메시지 broadcast 위해 전송.
         messagingTemplate.convertAndSend(destination, message);
@@ -53,6 +53,7 @@ public class ChatController {
         //DB에 메시지 추가
         chatMessage.setMessage(message);
         chatMessage.setCid(cid);
+        chatMessage.setSenderId(senderId);
         chatService.saveMessage(chatMessage);
     }
 
