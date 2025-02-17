@@ -1,6 +1,6 @@
-package com.example.triton.chatController.repository;
+package com.example.triton.chatting.repository;
 
-import com.example.triton.chatController.Entity.ChatMessage;
+import com.example.triton.chatting.Entity.ChatMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
