@@ -3,17 +3,24 @@ package com.example.triton.chatting.controller;
 import com.example.triton.chatting.Entity.ChatMessage;
 import com.example.triton.chatting.Entity.Chatting;
 import com.example.triton.chatting.service.ChatService;
+import com.example.triton.user.SiteUser;
+import com.example.triton.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,19 +29,33 @@ public class ChatController {
     private final ChatService chatService;
 
     private final SimpMessagingTemplate messagingTemplate;
+    private final UserRepository userRepository;
 
     /**
      * 채팅방 목록 페이지
-     * @param uid
      * @param model
      * @return
      */
-    @GetMapping("/{uid}/chat/list")
-    public String chatMain(@PathVariable("uid") Long uid, Model model){
+    @GetMapping("/main/senior")
+    public String chatMain(Model model){
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String username = userDetails.getUsername();
+        System.out.println(username);
+
+        SiteUser user = userRepository.findByUsername(username);
+        Long uid = user.getUid();
+        System.out.println(uid);
+
         List<Chatting> chatList = chatService.findChatting(uid);
+        System.out.println(chatList.size());
 
         model.addAttribute("chatList", chatList);
-        return "chat_list";
+
+        List<SiteUser> volunteers = userRepository.findByUsertype("volunteer");
+        model.addAttribute("volunteers", volunteers);
+        return "main-senior";
     }
 
     /**
@@ -70,5 +91,20 @@ public class ChatController {
         model.addAttribute("existingMes", existingMes);
         model.addAttribute("uid", uid);
         return "chat_test/chatting_draft";
+    }
+
+    @PostMapping("/{vid}/newChat/{agedId}")
+    public String newChat(@PathVariable("vid") Long vid, @PathVariable("agedId") Long agedId){
+        Chatting chatting = new Chatting();
+        chatting.setVid(vid);
+        chatting.setAgedid(agedId);
+        SiteUser user1 = userRepository.findById(vid).get();
+        SiteUser user2 = userRepository.findByUid(agedId).get();
+        chatting.setChatName(user1 + ", " + user2);
+        chatService.newChat(chatting);
+
+
+
+        return "redirect:/main/senior";
     }
 }

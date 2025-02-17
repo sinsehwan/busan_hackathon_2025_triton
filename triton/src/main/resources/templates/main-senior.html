@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <link rel="stylesheet" href="/styles/init.css">
     <link rel="stylesheet" href="/styles/main-senior.css">
@@ -35,6 +35,21 @@
 
     <!-- Chat Room Section -->
     <div id="chatSection" class="container" style="display: none;">
+        <ul>
+            <li th:each="chat : ${chatList}" class="chat-item">
+                <div class="chat-container"
+                     th:attr="onclick='location.href=\'/' + ${uid} + '/chatting/' + ${chat.cid} + '\''">
+                    <div class="profile-header">
+                    </div>
+                    <div class="chat-list">
+                    </div>
+                    <div class="chat-content">
+                        <span th:text="${chat.chatName}"></span>
+                    </div>
+                </div>
+            </li>
+            </ul>
+
         <div class="chat-container">
             <div class="profile-header">
             </div>
@@ -43,6 +58,7 @@
                 <p>안녕하세요</p>
             </div>
         </div>
+
     </div>
 
     <div class="modal">
