@@ -1,4 +1,4 @@
-package com.example.triton.chatController.Entity;
+package com.example.triton.tag.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,17 +6,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Getter @Setter
-public class ChatMessage {
+public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mid;
-    private String message;
-    private Long cid;
-    private Date mtime;
+    private Long tid;
+    private String tagName;
 }

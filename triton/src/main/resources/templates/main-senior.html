@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../static/styles/init.css">
+    <link rel="stylesheet" href="../static/styles/main-senior.css">
+    <meta charset="UTF-8">
+    <title>Senior Main Page</title>
+</head>
+<body>
+    <div class="nav-container">
+        <button class="nav-button" onclick="showVolunteers()">자원봉사자 찾기</button>
+        <button class="nav-button middle-button" onclick="showChatRoom()">우편함</button>
+        <button class="nav-button modal-btn" data-target="modal-example">문제등록</button>
+    </div>
+
+    <!-- Volunteer List Section -->
+    <div id="volunteerSection" class="container">
+        volunteer list here
+    </div>
+
+    <!-- Chat Room Section -->
+    <div id="chatSection" class="container" style="display: none;">
+        chat rooom here
+    </div>
+
+    <div class="modal">
+        <div class="modal_popup">
+            <h3>문제 등록</h3>
+            <textarea id="problem-text" rows="5" style="width: 100%;"></textarea>
+            <div class="modal-footer">
+                <button type="button">등록</button>
+                <button type="button" class="close-btn">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showVolunteers() {
+            document.getElementById('volunteerSection').style.display = 'block';
+            document.getElementById('chatSection').style.display = 'none';
+        }
+
+        function showChatRoom() {
+            document.getElementById('volunteerSection').style.display = 'none';
+            document.getElementById('chatSection').style.display = 'block';
+        }
+
+        const modal = document.querySelector('.modal');
+        const modalOpen = document.querySelector('.modal-btn');
+        const modalClose = document.querySelector('.close-btn');
+
+        //열기 버튼을 눌렀을 때 모달팝업이 열림
+        modalOpen.addEventListener('click',function(){
+            //'on' class 추가
+            modal.classList.add('on');
+        });
+        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+        modalClose.addEventListener('click',function(){
+            //'on' class 제거
+            modal.classList.remove('on');
+        });
+    </script>
+</body>
+</html>
