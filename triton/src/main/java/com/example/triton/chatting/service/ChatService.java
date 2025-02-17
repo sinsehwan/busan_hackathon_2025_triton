@@ -22,7 +22,7 @@ public class ChatService {
 
     public List<Chatting> findChatting(Long uid) {
         List<Chatting> findChat = chatRepository.findByVidOrAgedid(uid, uid);
-        return new ArrayList<>();
+        return new ArrayList<>(findChat);
     }
 
 

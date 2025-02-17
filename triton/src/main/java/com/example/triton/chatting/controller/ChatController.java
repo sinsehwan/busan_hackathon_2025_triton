@@ -32,9 +32,10 @@ public class ChatController {
     @GetMapping("/{uid}/chat/list")
     public String chatMain(@PathVariable("uid") Long uid, Model model){
         List<Chatting> chatList = chatService.findChatting(uid);
+        System.out.println(chatList.size());
 
         model.addAttribute("chatList", chatList);
-        return "chat_list";
+        return "main-senior";
     }
 
     /**
