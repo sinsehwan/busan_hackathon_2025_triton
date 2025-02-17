@@ -15,6 +15,22 @@
 
     <!-- Volunteer List Section -->
     <div id="volunteerSection" class="container">
+        <ul>
+            <li th:each="vli : ${volunteers}" class="chat-item">
+                <div class="volunteer-container">
+                    <div class="volunteer-header">
+                        <div class="profile-header">
+                        </div>
+                        <div class="volunteer-content">
+                            <span th:text="${vli.username}"></span>
+                        </div>
+                    </div>
+                    <button class="volunteer-button">신청</button>
+                </div>
+            </li>
+        </ul>
+
+
         <div class="volunteer-container">
             <div class="volunteer-header">
                 <div class="profile-header">
