@@ -23,7 +23,7 @@ body::before {
 h1 {
     color: white;
     font-size: 3.5rem;
-    margin: 0;
+    margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -55,11 +55,11 @@ a {
 .start-button {
     color: white;
     font-size: 1.5rem;
-    padding: 12px 30px;
+    padding: 20px 50px;
     margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.2);
-    border: 2px solid white;
-    border-radius: 25px;
+    border: 1px solid white;
+    border-radius: 37px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-decoration: none;
