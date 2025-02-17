@@ -28,4 +28,8 @@ public class SiteUser {
     private String usertype;
 
     private String photoUrl;
+
+    public String getUserType() {
+        return usertype;
+    }
 }
