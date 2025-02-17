@@ -1,23 +1,14 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'NanumGothic', sans-serif;
-    background-color: #F5E8C7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
     background-image: url('../images/welcome.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 body::before {
@@ -30,8 +21,9 @@ body::before {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
 }
+
 .signup-container {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255,255,255,0.8);
     padding: 3rem 3rem;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -40,7 +32,7 @@ body::before {
 }
 
 h1 {
-    color: #9C6644;
+    color: #666;
     text-align: center;
     margin-bottom: 2rem;
     font-size: 3rem;
@@ -53,7 +45,7 @@ h1 {
 label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #9C6644;
+    color: #666;
     font-size: 1.5rem;
 }
 
@@ -61,7 +53,7 @@ input[type="text"],
 input[type="password"] {
     width: 100%;
     padding: 1rem;
-    border: 1px solid #A6C48A;
+    border: 1px solid rgba(111,111,111,1);
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 1.5rem;
@@ -71,7 +63,7 @@ input[type="password"] {
 input[type="text"]:focus,
 input[type="password"]:focus {
     outline: none;
-    border-color: #9C6644;
+    border-color: #666;
 }   
 
 .signup-button {
