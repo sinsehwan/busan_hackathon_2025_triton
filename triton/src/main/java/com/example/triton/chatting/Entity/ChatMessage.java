@@ -1,4 +1,4 @@
-package com.example.triton.chatController.Entity;
+package com.example.triton.chatting.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
