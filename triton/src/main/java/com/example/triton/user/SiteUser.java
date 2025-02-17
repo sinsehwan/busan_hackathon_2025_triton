@@ -29,6 +29,8 @@ public class SiteUser {
 
     private String photoUrl;
 
+    private Integer score;
+
     public String getUserType() {
         return usertype;
     }

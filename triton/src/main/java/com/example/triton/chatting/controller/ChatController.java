@@ -3,10 +3,14 @@ package com.example.triton.chatting.controller;
 import com.example.triton.chatting.Entity.ChatMessage;
 import com.example.triton.chatting.Entity.Chatting;
 import com.example.triton.chatting.service.ChatService;
+import com.example.triton.user.SiteUser;
+import com.example.triton.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,15 +26,25 @@ public class ChatController {
     private final ChatService chatService;
 
     private final SimpMessagingTemplate messagingTemplate;
+    private final UserRepository userRepository;
 
     /**
      * 채팅방 목록 페이지
-     * @param uid
      * @param model
      * @return
      */
-    @GetMapping("/{uid}/chat/list")
-    public String chatMain(@PathVariable("uid") Long uid, Model model){
+    @GetMapping("/main/senior")
+    public String chatMain(Model model){
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String username = userDetails.getUsername();
+        System.out.println(username);
+
+        SiteUser user = userRepository.findByUsername(username);
+        Long uid = user.getUid();
+        System.out.println(uid);
+
         List<Chatting> chatList = chatService.findChatting(uid);
         System.out.println(chatList.size());
 
