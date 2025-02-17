@@ -1,22 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="/styles/init.css">
-    <link rel="stylesheet" href="/styles/welcome.css">
+    <link rel="stylesheet" href="../static/styles/init.css">
+    <link rel="stylesheet" href="../static/styles/welcome.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
 </head>
 <body>
-<div id="main-view">
-    <div id="title-container">
-        <h1 class="fade-in">도움이 필요하신가요?</h1>
-        <p class="description fade-in-delay">지금 바로 나에게 맞는 자원봉사자를 만나보세요</p>
+    <div id="main-view">
+        <div id="title-container">
+            <h1 class="fade-in">도움이 필요하신가요?</h1>
+            <p class="description fade-in-delay">지금 바로 나에게 맞는 자원봉사자를 만나보세요</p>
+        </div>
+        <div id="start-button-container">
+            <a href="signin" class="start-button">로그인</a>
+            <a id="signUpButton" class="start-button">회원가입</a>
+        </div>
     </div>
-    <div id="start-button-container">
-        <a href="signin" class="start-button">로그인</a>
-        <a href="signup" class="start-button">회원가입</a>
+    <div class="modal">
+        <div class="modal_popup">
+            <div id="senior-block">
+                <h2>노인 회원가입</h2>
+                <p>노인 회원가입 페이지입니다.</p>
+            </div>
+            <div id="volunteer-block">
+                <h2>자원봉사자 회원가입</h2>
+                <p>자원봉사자 회원가입 페이지입니다.</p>
+            </div>
+        </div>
     </div>
-</div>
 </body>
+<script>
+    document.getElementById('signUpButton').addEventListener('click', function() {
+        const titleContainer = document.getElementById('title-container');
+        const buttonContainer = document.getElementById('start-button-container');
+        const modal = document.querySelector('.modal');
+        
+        // Fade out initial containers
+        titleContainer.style.opacity = '0';
+        buttonContainer.style.opacity = '0';
+        
+        setTimeout(() => {
+            titleContainer.style.display = 'none';
+            buttonContainer.style.display = 'none';
+            modal.style.display = 'block';
+
+            setTimeout(() => {
+                modal.style.opacity = '1';
+            }, 50);
+        }, 500);
+    });
+</script>
 </html>
