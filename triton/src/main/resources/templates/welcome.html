@@ -15,8 +15,41 @@
         </div>
         <div id="start-button-container">
             <a href="signin" class="start-button">로그인</a>
-            <a href="signup" class="start-button">회원가입</a>
+            <a id="signUpButton" class="start-button">회원가입</a>
+        </div>
+    </div>
+    <div class="modal">
+        <div class="modal_popup">
+            <div id="senior-block">
+                <h2>노인 회원가입</h2>
+                <p>노인 회원가입 페이지입니다.</p>
+            </div>
+            <div id="volunteer-block">
+                <h2>자원봉사자 회원가입</h2>
+                <p>자원봉사자 회원가입 페이지입니다.</p>
+            </div>
         </div>
     </div>
 </body>
+<script>
+    document.getElementById('signUpButton').addEventListener('click', function() {
+        const titleContainer = document.getElementById('title-container');
+        const buttonContainer = document.getElementById('start-button-container');
+        const modal = document.querySelector('.modal');
+        
+        // Fade out initial containers
+        titleContainer.style.opacity = '0';
+        buttonContainer.style.opacity = '0';
+        
+        setTimeout(() => {
+            titleContainer.style.display = 'none';
+            buttonContainer.style.display = 'none';
+            modal.style.display = 'block';
+
+            setTimeout(() => {
+                modal.style.opacity = '1';
+            }, 50);
+        }, 500);
+    });
+</script>
 </html>
