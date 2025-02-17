@@ -91,18 +91,6 @@ input[type="password"]:focus {
     text-align: center;
 }
 
-.forgot-password {
-    display: block;
-    color: #666;
-    text-decoration: none;
-    margin-bottom: 1rem;
-}
-
-.forgot-password:hover {
-    color: #9C6644;
-    text-decoration: underline;
-}
-
 .signup-link {
     color: #666;
     margin: 0;
@@ -116,7 +104,7 @@ input[type="password"]:focus {
 
 .signup-link a:hover {
     color: #9C6644;
-    text-decoration: underline;
+    text-decoration: none;
 } 
 
 a {
