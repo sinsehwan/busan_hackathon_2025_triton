@@ -10,6 +10,7 @@
         var stompClient = null;
 
         var chatId = 1;
+        var senderId = 1;
 
         function connect() {
             var socket = new SockJS('/chat');  // /chat 엔드포인트에 연결
@@ -27,7 +28,7 @@
         function sendMessage() {
             console.log("sendmessage")
             var message = document.getElementById("message").value;
-            stompClient.send("/app/" + chatId + "/sendMessage", {}, message);
+            stompClient.send("/app/" + chatId + "/sendMessage/" + senderId, {}, message);
         }
 
         function showMessage(message){

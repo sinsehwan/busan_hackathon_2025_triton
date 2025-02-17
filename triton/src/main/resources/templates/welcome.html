@@ -1,22 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="/styles/init.css">
-    <link rel="stylesheet" href="/styles/welcome.css">
+    <link rel="stylesheet" href="../static/styles/init.css">
+    <link rel="stylesheet" href="../static/styles/welcome.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
 </head>
 <body>
-<div id="main-view">
-    <div id="title-container">
-        <h1 class="fade-in">도움이 필요하신가요?</h1>
-        <p class="description fade-in-delay">지금 바로 나에게 맞는 자원봉사자를 만나보세요</p>
+    <div id="main-view">
+        <div id="title-container">
+            <h1 class="fade-in">도움이 필요하신가요?</h1>
+            <p class="description fade-in-delay">지금 바로 나에게 맞는 자원봉사자를 만나보세요</p>
+        </div>
+        <div id="start-button-container">
+            <a href="signin" class="start-button">로그인</a>
+            <a id="signUpButton" class="start-button">회원가입</a>
+        </div>
     </div>
-    <div id="start-button-container">
-        <a href="signin" class="start-button">로그인</a>
-        <a href="signup" class="start-button">회원가입</a>
+    <div class="modal">
+        <div class="modal_popup">
+            <div class="selection-block">
+                <div class="block" onclick="window.location.href='signup-senior'">
+                    <div class ="circleblock">
+                        <div class="circle1" style="background-color: transparent;">
+                            <img src="../static/images/senior.png" width="240px" height="240px">
+                        </div>
+                    </div>
+                    <div class = "nameblock">
+                        노인 사용자
+                    </div>
+                </div>
+                <div class="block" onclick="window.location.href='signup-volunteer'">
+                    <div class ="circleblock">
+                        <div class="circle2" style="background-color: transparent;">
+                            <img src="../static/images/volunteer.png" width="225px" height="225px">
+                        </div>
+                    </div>
+                    <div class = "nameblock">
+                        자원 봉사자
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </body>
+<script>
+    document.getElementById('signUpButton').addEventListener('click', function() {
+        const titleContainer = document.getElementById('title-container');
+        const buttonContainer = document.getElementById('start-button-container');
+        const modal = document.querySelector('.modal');
+        
+        // Fade out initial containers
+        titleContainer.style.opacity = '0';
+        buttonContainer.style.opacity = '0';
+        
+        setTimeout(() => {
+            titleContainer.style.display = 'none';
+            buttonContainer.style.display = 'none';
+            modal.style.display = 'block';
+
+            setTimeout(() => {
+                modal.style.opacity = '1';
+            }, 50);
+        }, 500);
+    });
+</script>
 </html>
