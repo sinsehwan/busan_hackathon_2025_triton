@@ -37,8 +37,7 @@ label {
 }
 
 input[type="text"],
-input[type="password"],
-input[type="email"] {
+input[type="password"] {
     width: 100%;
     padding: 1rem;
     border: 1px solid #A6C48A;
@@ -48,8 +47,7 @@ input[type="email"] {
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus {
+input[type="password"]:focus {
     outline: none;
     border-color: #9C6644;
 }   
@@ -91,6 +89,25 @@ input[type="email"]:focus {
     color: #9C6644;
     text-decoration: underline;
 } 
+
+.radio-group {
+    display: flex;
+    gap: 1rem;
+}
+
+[type="radio"] {
+    appearance: none; /* 기본(네이티브) 모양을 제거 */
+    border-radius: 50%;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+[type="radio"]:checked {
+    border: 6px solid #A6C48A;
+}
+
 
 a {
     font-size: 1.5rem;
