@@ -10,7 +10,8 @@ html {
 }
 
 body { 
-    font-family: 'NanumSquare', sans-serif 
+    font-family: 'NanumSquare', sans-serif
+    font-weight: 300;
 }
 
 .normal      { font-weight: 400 }

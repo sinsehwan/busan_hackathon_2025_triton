@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Help List</h1>
+
+    <!-- 검색 폼 -->
+    <form action="/help/search" method="get" class="mb-4">
+        <div class="form-row">
+            <div class="col">
+                <label for="tag1">Tag 1</label>
+                <input type="checkbox" name="tag1" id="tag1">
+            </div>
+            <div class="col">
+                <label for="tag2">Tag 2</label>
+                <input type="checkbox" name="tag2" id="tag2">
+            </div>
+            <div class="col">
+                <label for="tag3">Tag 3</label>
+                <input type="checkbox" name="tag3" id="tag3">
+            </div>
+            <div class="col">
+                <label for="tag4">Tag 4</label>
+                <input type="checkbox" name="tag4" id="tag4">
+            </div>
+            <div class="col">
+                <label for="tag5">Tag 5</label>
+                <input type="checkbox" name="tag5" id="tag5">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+
+    <!-- 검색된 결과 표시 -->
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Tag 1</th>
+            <th>Tag 2</th>
+            <th>Tag 3</th>
+            <th>Tag 4</th>
+            <th>Tag 5</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="help : ${helps}">
+            <td th:text="${help.id}"></td>
+            <td th:text="${help.description}"></td>
+            <td th:text="${help.tag1}"></td>
+            <td th:text="${help.tag2}"></td>
+            <td th:text="${help.tag3}"></td>
+            <td th:text="${help.tag4}"></td>
+            <td th:text="${help.tag5}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
