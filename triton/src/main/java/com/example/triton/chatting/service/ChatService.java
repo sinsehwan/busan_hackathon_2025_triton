@@ -27,7 +27,7 @@ public class ChatService {
 
 
     public List<ChatMessage> getMessages(Long cid){
-        List<ChatMessage> messages = messageRepository.findByCid(cid);
+        List<ChatMessage> messages = messageRepository.findByChatId(cid);
         return new ArrayList<>(messages);
     }
 

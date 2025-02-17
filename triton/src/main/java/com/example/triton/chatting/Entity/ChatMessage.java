@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -18,6 +19,6 @@ public class ChatMessage {
     private Long mid;
     private String message;
     private Long senderId;
-    private Long cid;
-    private Date mtime;
+    private Long chatId;
+    private LocalDateTime mtime;
 }

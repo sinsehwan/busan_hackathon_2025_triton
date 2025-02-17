@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #F5E8C7;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            color: #9C6644;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #A6C48A;
+        }
+
+        .message-container {
+            height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: rgba(245, 232, 199, 0.3);
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .sent-message {
+            background-color: #9C6644;
+            color: white;
+            margin-left: auto;
+            border-top-right-radius: 5px;
+        }
+
+        .received-message {
+            background-color: #A6C48A;
+            color: black;
+            margin-right: auto;
+            border-top-left-radius: 5px;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        #message {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #9C6644;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #9C6644;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #7d503a;
+        }
+    </style>
+
+    <script th:inline="javascript">
+        var stompClient = null;
+        var chatId = [[${cid}]];
+        var senderId = [[${uid}]];
+
+        function connect() {
+            var socket = new SockJS('/chat');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/topic/messages/' + chatId, function (messageOutput) {
+                    var charMessage = JSON.parse(messageOutput.body);
+                    console.log(messageOutput.body);
+                    showMessage(charMessage);
+                });
+            }, function (error) {
+                console.log('Error: ' + error);
+            });
+        }
+
+        function sendMessage() {
+            console.log("sendmessage")
+            var message = document.getElementById("message").value;
+            if (message.trim() !== "") {
+                stompClient.send("/app/" + chatId + "/sendMessage/" + senderId, {}, message);
+                document.getElementById("message").value = "";
+            }
+        }
+
+        function showMessage(chatMessage) {
+            var response = document.getElementById("response");
+            var messageDiv = document.createElement("div");
+            messageDiv.className = "message " + (chatMessage.senderId === senderId ? "sent-message" : "received-message");
+            messageDiv.textContent = chatMessage.message;
+
+            // 시간을 표시할 div 생성
+            var timeDiv = document.createElement("div");
+            timeDiv.className = "message-time";
+            var messageTime = new Date(chatMessage.mtime); // mTime을 Date 객체로 변환
+            timeDiv.textContent = messageTime.toLocaleTimeString(); // 시간을 포맷하여 표시
+            // 메시지 아래에 시간을 추가
+            messageDiv.appendChild(timeDiv);
+
+            response.appendChild(messageDiv);
+            response.scrollTop = response.scrollHeight;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var messageInput = document.getElementById('message');
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</head>
+<body onload="connect();">
+    <div class="chat-container">
+        <h1>Chat</h1>
+        <div class="message-container" id="response">
+            <!-- 기존 메시지 표시 -->
+            <th:block th:each="msg : ${existingMes}">
+                <div th:class="'message ' + (${msg.senderId} == ${uid} ? 'sent-message' : 'received-message')"
+                     th:text="${msg.message}">
+                </div>
+
+            </th:block>
+        </div>
+        <div class="input-area">
+            <input type="text" id="message" placeholder="Enter your message"/>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</body>
+</html>
