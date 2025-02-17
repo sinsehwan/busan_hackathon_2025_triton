@@ -1,9 +1,9 @@
-package com.example.triton.chatController.service;
+package com.example.triton.chatting.service;
 
-import com.example.triton.chatController.Entity.ChatMessage;
-import com.example.triton.chatController.Entity.Chatting;
-import com.example.triton.chatController.repository.ChatMessageRepository;
-import com.example.triton.chatController.repository.ChatRepository;
+import com.example.triton.chatting.Entity.ChatMessage;
+import com.example.triton.chatting.Entity.Chatting;
+import com.example.triton.chatting.repository.ChatMessageRepository;
+import com.example.triton.chatting.repository.ChatRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,8 +49,9 @@ public class ChatService {
     }
 
 
-    public void deleteChat(int CId){
-
+    public void deleteChat(Long cid){
+        Chatting targetChat = chatRepository.findByCid(cid).get();
+        chatRepository.delete(targetChat);
     }
 }
 
