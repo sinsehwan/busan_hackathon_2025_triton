@@ -36,7 +36,7 @@ label {
     font-size: 1.5rem;
 }
 
-input[type="email"],
+input[type="username"],
 input[type="password"] {
     width: 100%;
     padding: 1rem;
@@ -46,7 +46,7 @@ input[type="password"] {
     font-size: 1.5rem;
 }
 
-input[type="email"]:focus,
+input[type="username"]:focus,
 input[type="password"]:focus {
     outline: none;
     border-color: #9C6644;
@@ -91,18 +91,6 @@ input[type="password"]:focus {
     text-align: center;
 }
 
-.forgot-password {
-    display: block;
-    color: #666;
-    text-decoration: none;
-    margin-bottom: 1rem;
-}
-
-.forgot-password:hover {
-    color: #9C6644;
-    text-decoration: underline;
-}
-
 .signup-link {
     color: #666;
     margin: 0;
@@ -116,7 +104,7 @@ input[type="password"]:focus {
 
 .signup-link a:hover {
     color: #9C6644;
-    text-decoration: underline;
+    text-decoration: none;
 } 
 
 a {
