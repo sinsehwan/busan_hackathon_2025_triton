@@ -40,3 +40,10 @@ public class TagService {
         return tagNames;
     }
 }
+
+/*TODO
+
+senior -> 입력 : description ( tag 5 ) //
+
+
+ */

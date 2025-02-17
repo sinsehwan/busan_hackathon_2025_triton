@@ -10,4 +10,7 @@ public class HomeController {
     public String showWelcome(){
         return "welcome.html";
     }
+
+    @GetMapping("/")
+    public String redirectWelcome() { return "redirect:/welcome"; }
 }
