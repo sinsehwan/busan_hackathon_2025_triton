@@ -14,11 +14,4 @@ public class SeniorMainController {
     @Autowired
     private HelpService helpService;
 
-
-    @GetMapping("/main/senior")
-    public String seniorMain(Model model){
-        List<HelpEntity> helps = helpService.getAllHelps();
-        model.addAttribute("helps", helps);
-        return "main-senior";
-    }
 }
