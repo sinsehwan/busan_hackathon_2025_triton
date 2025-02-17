@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../static/styles/init.css">
+    <link rel="stylesheet" href="../static/styles/main-volunteer.css">
+    <meta charset="UTF-8">
+    <title>Volunteer Main Page</title>
+</head>
+<body>
+    <div class="nav-container">
+        <button class="nav-button" onclick="showVolunteers()">독거노인 찾기</button>
+        <button class="nav-button middle-button" onclick="showChatRoom()">우편함</button>
+        <button class="nav-button modal-btn" data-target="modal-example">내 마일리지</button>
+    </div>
+
+    <!-- Volunteer List Section -->
+    <div id="volunteerSection" class="container">
+        <div class="volunteer-container">
+            <div class="volunteer-header">
+                <div class="profile-header">
+                </div>
+                <div class="volunteer-content">
+                    <span>이름</span>
+                    <p>안녕하세요</p>
+                </div>
+            </div>
+            <button class="volunteer-button">신청</button>
+        </div>
+    </div>
+
+    <!-- Chat Room Section -->
+    <div id="chatSection" class="container" style="display: none;">
+        <div class="chat-container">
+            <div class="profile-header">
+            </div>
+            <div class="chat-content">
+                <span>이름</span>
+                <p>안녕하세요</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal">
+        <div class="modal_popup">
+            <h3>내 마일리지</h3>
+            <p>현재 내 마일리지는 <span>100</span>점입니다.</p>
+            <div class="modal-footer">
+                <button type="button" class="close-btn">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showVolunteers() {
+            document.getElementById('volunteerSection').style.display = 'block';
+            document.getElementById('chatSection').style.display = 'none';
+        }
+
+        function showChatRoom() {
+            document.getElementById('volunteerSection').style.display = 'none';
+            document.getElementById('chatSection').style.display = 'block';
+        }
+
+        const modal = document.querySelector('.modal');
+        const modalOpen = document.querySelector('.modal-btn');
+        const modalClose = document.querySelector('.close-btn');
+
+        //열기 버튼을 눌렀을 때 모달팝업이 열림
+        modalOpen.addEventListener('click',function(){
+            //'on' class 추가
+            modal.classList.add('on');
+        });
+        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+        modalClose.addEventListener('click',function(){
+            //'on' class 제거
+            modal.classList.remove('on');
+        });
+    </script>
+</body>
+</html>
