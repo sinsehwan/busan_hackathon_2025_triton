@@ -18,6 +18,6 @@ public class ChatMessage {
     private Long mid;
     private String message;
     private Long senderId;
-    private Long cid;
+    private Long chatId;
     private Date mtime;
 }
