@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
     List<ChatMessage> findByCid(Long cid);
     Optional<ChatMessage> findByMid(Long mid);
+    //
 }
