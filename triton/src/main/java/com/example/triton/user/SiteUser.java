@@ -34,4 +34,5 @@ public class SiteUser {
     public String getUserType() {
         return usertype;
     }
+    public Long getUId() { return uid; }
 }

@@ -34,7 +34,7 @@
             <button type="submit" class="btn btn-primary mt-2">Search</button>
         </form>
         <div class="container">
-            <div th:each="help : ${helps}" class="card" onclick="window.location.href='/welcome'">
+            <div th:each="help : ${helps}" class="card" th:attr="onclick=|redirectToConnection('${help.username}')|">
                 <div class="card-title" th:text="${help.username}"></div>
                 <div class="card-text" th:text="${help.description}"></div>
 
@@ -52,6 +52,21 @@
 
     <!-- Chat Room Section -->
     <div id="chatSection" class="container" style="display: none;">
+        <ul>
+            <li th:each="chat : ${chatList}" class="chat-item">
+                <div class="chat-container"
+                     th:attr="onclick='location.href=\'/' + ${uid} + '/chatting/' + ${chat.cid} + '\''">
+                    <div class="profile-header">
+                    </div>
+                    <div class="chat-list">
+                    </div>
+                    <div class="chat-content">
+                        <span th:text="${chat.chatName}"></span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
         <div class="chat-container">
             <div class="profile-header">
             </div>
@@ -117,6 +132,10 @@
                     document.getElementById('response').innerText = '에러 발생: ' + error;  // 에러 처리
                 });
        }
+
+        function redirectToConnection(username) {
+        window.location.href = '/connection?username=' + encodeURIComponent(username);
+    }
     </script>
 </body>
 </html>

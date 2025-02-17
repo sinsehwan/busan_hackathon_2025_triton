@@ -3,9 +3,12 @@ package com.example.triton.chatting.controller;
 import com.example.triton.chatting.Entity.ChatMessage;
 import com.example.triton.chatting.Entity.Chatting;
 import com.example.triton.chatting.service.ChatService;
+import com.example.triton.help.HelpEntity;
+import com.example.triton.help.HelpService;
 import com.example.triton.user.SiteUser;
 import com.example.triton.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -36,25 +39,60 @@ public class ChatController {
      * @param model
      * @return
      */
+    @Autowired
+    private HelpService helpService;
+
     @GetMapping("/main/senior")
     public String chatMain(Model model){
-
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         String username = userDetails.getUsername();
         System.out.println(username);
 
         SiteUser user = userRepository.findByUsername(username);
-        Long uid = user.getUid();
+        Long uid = user.getUId();
         System.out.println(uid);
 
         List<Chatting> chatList = chatService.findChatting(uid);
         System.out.println(chatList.size());
 
+        model.addAttribute("uid", uid);
+
         model.addAttribute("chatList", chatList);
 
         List<SiteUser> volunteers = userRepository.findByUsertype("volunteer");
         model.addAttribute("volunteers", volunteers);
+
+        List<HelpEntity> helps = helpService.getAllHelps();
+        model.addAttribute("helps", helps);
+
+        return "main-senior";
+    }
+
+    @GetMapping("/main/volunteer")
+    public String chatMainVolunteer(Model model){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String username = userDetails.getUsername();
+        System.out.println(username);
+
+        SiteUser user = userRepository.findByUsername(username);
+        Long uid = user.getUId();
+        System.out.println(uid);
+
+        List<Chatting> chatList = chatService.findChatting(uid);
+        System.out.println(chatList.size());
+
+        model.addAttribute("uid", uid);
+
+        model.addAttribute("chatList", chatList);
+
+        List<SiteUser> volunteers = userRepository.findByUsertype("volunteer");
+        model.addAttribute("volunteers", volunteers);
+
+        List<HelpEntity> helps = helpService.getAllHelps();
+        model.addAttribute("helps", helps);
+
         return "main-senior";
     }
 
