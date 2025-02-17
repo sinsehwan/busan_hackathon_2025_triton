@@ -86,6 +86,59 @@ h3 {
     align-items: center;
 }
 
+        /* 카드 스타일 */
+        .card {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* 카드 호버 효과 */
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        /* 카드 제목 (이름) 스타일 */
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        /* 설명 텍스트 */
+        .card-text {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* 태그 스타일 */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            border-radius: 5px;
+        }
+
+        /* 태그 색상 설정 */
+        .tag-health { background-color: #28a745; }  /* 건강 */
+        .tag-counseling { background-color: #17a2b8; }  /* 상담 */
+        .tag-living { background-color: #ffc107; color: #333; } /* 생활 */
+        .tag-education { background-color: #007bff; }  /* 교육 */
+        .tag-mobility { background-color: #dc3545; }
+
 .container {
     background-color: white;
     padding: 1.5rem 1.5rem 0.5rem 1.5rem;
@@ -125,7 +178,7 @@ button {
 
 button:hover {
     background-color: #9C6644;
-} 
+}
 
 .chat-container {
     display: flex;

@@ -12,6 +12,7 @@ public class HelpEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String username;
     private String description;
     private boolean tag1;
     private boolean tag2;

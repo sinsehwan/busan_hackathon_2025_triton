@@ -1,49 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini Chat</title>
-    <link rel="stylesheet" href="/styles/chat.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Gemini API Test</title>
 </head>
 <body>
-<div class="chat-container">
-    <h1>Gemini Chat</h1>
-    <form id="chat-form">
-        <label for="message">메시지를 입력하세요:</label>
-        <input type="text" id="message" name="message" required>
-        <button type="submit">전송</button>
-    </form>
+<h2>Gemini API 테스트</h2>
+<label for="query">질문을 입력하세요:</label>
+<textarea type="text" id="query" placeholder="질문을 입력하세요"></textarea>
+<button onclick="sendRequest()">질문하기</button>
 
-    <h2>응답:</h2>
-    <p id="response"></p>
-</div>
+<h3>응답:</h3>
+<pre id="response"></pre>
 
 <script>
-    $(document).ready(function() {
-        $("#chat-form").submit(function(event) {
-            event.preventDefault(); // 폼의 기본 제출 동작 방지
-
-            var userMessage = $("#message").val();
-            var prompt = "5개의 키워드[건강, 상담, 생활, 교육, 이동]가 주어집니다. 다음으로 입력되는 상황이나 말을 분석하고, 알맞은 키워드를 최대 3개 까지 정해서 키워드만 출력하세요. 억지로 키워드를 끼워 맞춰서는 안됩니다.";  // 여기서 프롬프트 정의
-
-            var finalMessage = prompt + userMessage;  // 프롬프트와 메시지를 결합
-
-            $.ajax({
-                type: "GET",  // 🔹 GET 요청으로 변경
-                url: "/api/gemini/completion",
-                data: { text: finalMessage },  // 🔹 결합된 텍스트를 전송
-                success: function(response) {
-                    $("#response").text(response);
-                },
-                error: function() {
-                    $("#response").text("에러 발생! 다시 시도하세요.");
-                }
+    function sendRequest() {
+        const query = document.getElementById('query').value;
+        // 실제 API 호출
+        fetch(`http://localhost:8090/api/gemini/completion?text=${encodeURIComponent(query)}`)
+            .then(response => response.text())  // 응답을 텍스트로 처리
+            .then(data => {
+                document.getElementById('response').innerText = data;  // 응답을 페이지에 표시
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = '에러 발생: ' + error;  // 에러 처리
             });
-        });
-    });
-
+    }
 </script>
 </body>
 </html>

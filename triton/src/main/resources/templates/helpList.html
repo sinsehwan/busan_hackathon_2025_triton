@@ -38,9 +38,9 @@
     </form>
 
     <!-- 검색된 결과 표시 -->
-    <table class="table table-bordered">
-        <thead>
-        <tr>
+    <table class="table table-bordered table-striped table-hover table-dark rounded shadow-sm">
+        <thead class="thead-dark">
+        <tr class="text-center">
             <th>ID</th>
             <th>Description</th>
             <th>Tag 1</th>
@@ -51,7 +51,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="help : ${helps}">
+        <tr th:each="help : ${helps}" class="text-center">
             <td th:text="${help.id}"></td>
             <td th:text="${help.description}"></td>
             <td th:text="${help.tag1}"></td>
@@ -62,6 +62,7 @@
         </tr>
         </tbody>
     </table>
+
 </div>
 </body>
 </html>

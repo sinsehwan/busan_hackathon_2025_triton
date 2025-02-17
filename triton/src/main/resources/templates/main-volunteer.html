@@ -16,6 +16,23 @@
 
     <!-- Volunteer List Section -->
     <div id="volunteerSection" class="container">
+        <form action="/main/volunteer/search" method="get" class="mb-4">
+            <div class="form-row">
+                <div class="col">
+                    <label for="tag1">건강</label>
+                    <input type="checkbox" name="tag1" id="tag1">
+                    <label for="tag2">상담</label>
+                    <input type="checkbox" name="tag2" id="tag2">
+                    <label for="tag3">생활</label>
+                    <input type="checkbox" name="tag3" id="tag3">
+                    <label for="tag4">교육</label>
+                    <input type="checkbox" name="tag4" id="tag4">
+                    <label for="tag5">이동</label>
+                    <input type="checkbox" name="tag5" id="tag5">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Search</button>
+        </form>
         <div class="container">
             <div th:each="help : ${helps}" class="card" onclick="window.location.href='/welcome'">
                 <div class="card-title" th:text="${help.username}"></div>
@@ -83,6 +100,24 @@
            //'on' class 제거
            modal.classList.remove('on');
        });
+
+       function sendRequest() {
+            const query = document.getElementById('query').value;
+            const prompt = "5개의 키워드[건강, 상담, 생활, 교육, 이동]가 주어집니다. 다음으로 입력되는 상황이나 말을 분석하고, 알맞은 키워드를 최대 3개 까지 정해서 공백을 두고 키워드만 출력하세요. 억지로 키워드를 끼워 맞춰서는 안됩니다.";  // 추가할 프롬프트 정의
+
+            const finalQuery = prompt + " " + query;  // 프롬프트와 입력된 값을 결합
+
+            // 실제 API 호출
+            fetch(`http://localhost:8090/api/gemini/completion?text=${encodeURIComponent(finalQuery)}`)
+                .then(response => response.text())  // 응답을 텍스트로 처리
+                .then(data => {
+                    document.getElementById('response').innerText = data;  // 응답을 페이지에 표시
+                })
+                .catch(error => {
+                    document.getElementById('response').innerText = '에러 발생: ' + error;  // 에러 처리
+                });
+       }
+
     </script>
 </body>
 </html>
