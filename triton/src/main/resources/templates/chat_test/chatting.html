@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <script>
+        var stompClient = null;
+
+        var chatId = 1;
+
+        function connect() {
+            var socket = new SockJS('/chat');  // /chat 엔드포인트에 연결
+            stompClient = Stomp.over(socket);  // STOMP 프로토콜 사용
+            stompClient.connect({}, function (frame) {
+                console.log('Connected: ' + frame);  // 연결 성공 여부 확인
+                stompClient.subscribe('/topic/messages/' + chatId, function (messageOutput) {
+                    showMessage(messageOutput.body);  // 메시지 받으면 UI에 표시
+                });
+            }, function (error) {
+                console.log('Error: ' + error);  // 연결 실패 시 에러 로그
+            });
+        }
+
+        function sendMessage() {
+            console.log("sendmessage")
+            var message = document.getElementById("message").value;
+            stompClient.send("/app/" + chatId + "/sendMessage", {}, message);
+        }
+
+        function showMessage(message){
+            var response = document.getElementById("response");
+            response.innerHTML += "<p>" + message + "</p>";
+        }
+    </script>
+</head>
+<body onload="connect();">
+<h1>Chat</h1>
+<input type="text" id="message" placeholder="Enter your message"/>
+<button onclick="sendMessage()">Send</button>
+<div id="response"></div>
+</body>
+</html>
