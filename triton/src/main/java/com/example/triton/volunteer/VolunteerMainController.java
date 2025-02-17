@@ -1,4 +1,4 @@
-package com.example.triton.senior;
+package com.example.triton.volunteer;
 
 import com.example.triton.help.HelpEntity;
 import com.example.triton.help.HelpService;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class SeniorMainController {
+public class VolunteerMainController {
     @Autowired
     private HelpService helpService;
 
 
-    @GetMapping("/main/senior")
+    @GetMapping("/main/volunteer")
     public String seniorMain(Model model){
         List<HelpEntity> helps = helpService.getAllHelps();
         model.addAttribute("helps", helps);
-        return "main-senior";
+        return "main-volunteer";
     }
 }

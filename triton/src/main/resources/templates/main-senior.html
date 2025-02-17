@@ -13,34 +13,23 @@
         <button class="nav-button modal-btn" data-target="modal-example">문제등록</button>
     </div>
 
+
     <!-- Volunteer List Section -->
     <div id="volunteerSection" class="container">
-        <ul>
-            <li th:each="vli : ${volunteers}" class="chat-item">
-                <div class="volunteer-container">
-                    <div class="volunteer-header">
-                        <div class="profile-header">
-                        </div>
-                        <div class="volunteer-content">
-                            <span th:text="${vli.username}"></span>
-                        </div>
-                    </div>
-                    <button class="volunteer-button">신청</button>
-                </div>
-            </li>
-        </ul>
+        <div class="container">
+            <div th:each="help : ${helps}" class="card" onclick="window.location.href='/welcome'">
+                <div class="card-title" th:text="${help.username}"></div>
+                <div class="card-text" th:text="${help.description}"></div>
 
-
-        <div class="volunteer-container">
-            <div class="volunteer-header">
-                <div class="profile-header">
-                </div>
-                <div class="volunteer-content">
-                    <span>이름</span>
-                    <p>안녕하세요</p>
+                <!-- 태그 리스트 -->
+                <div class="tag-container">
+                    <span th:if="${help.tag1}" class="badge tag-health">건강</span>
+                    <span th:if="${help.tag2}" class="badge tag-counseling">상담</span>
+                    <span th:if="${help.tag3}" class="badge tag-living">생활</span>
+                    <span th:if="${help.tag4}" class="badge tag-education">교육</span>
+                    <span th:if="${help.tag5}" class="badge tag-mobility">이동</span>
                 </div>
             </div>
-            <button class="volunteer-button">신청</button>
         </div>
     </div>
 
@@ -75,39 +64,41 @@
     <div class="modal">
         <div class="modal_popup">
             <h3>문제 등록</h3>
-            <textarea id="problem-text" rows="5" style="width: 100%;"></textarea>
+            <textarea type="text" id="query"></textarea>
+            <h2>응답:</h2>
+            <p id="response"></p>
             <div class="modal-footer">
-                <button type="button">등록</button>
+                <button onclick="sendRequest()">등록</button>
                 <button type="button" class="close-btn">닫기</button>
             </div>
         </div>
     </div>
 
     <script>
-        function showVolunteers() {
-            document.getElementById('volunteerSection').style.display = 'block';
-            document.getElementById('chatSection').style.display = 'none';
-        }
+       function showVolunteers() {
+           document.getElementById('volunteerSection').style.display = 'block';
+           document.getElementById('chatSection').style.display = 'none';
+       }
 
-        function showChatRoom() {
-            document.getElementById('volunteerSection').style.display = 'none';
-            document.getElementById('chatSection').style.display = 'block';
-        }
+       function showChatRoom() {
+           document.getElementById('volunteerSection').style.display = 'none';
+           document.getElementById('chatSection').style.display = 'block';
+       }
 
-        const modal = document.querySelector('.modal');
-        const modalOpen = document.querySelector('.modal-btn');
-        const modalClose = document.querySelector('.close-btn');
+       const modal = document.querySelector('.modal');
+       const modalOpen = document.querySelector('.modal-btn');
+       const modalClose = document.querySelector('.close-btn');
 
-        //열기 버튼을 눌렀을 때 모달팝업이 열림
-        modalOpen.addEventListener('click',function(){
-            //'on' class 추가
-            modal.classList.add('on');
-        });
-        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
-        modalClose.addEventListener('click',function(){
-            //'on' class 제거
-            modal.classList.remove('on');
-        });
+       //열기 버튼을 눌렀을 때 모달팝업이 열림
+       modalOpen.addEventListener('click',function(){
+           //'on' class 추가
+           modal.classList.add('on');
+       });
+       //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+       modalClose.addEventListener('click',function(){
+           //'on' class 제거
+           modal.classList.remove('on');
+       });
     </script>
 </body>
 </html>
