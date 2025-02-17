@@ -32,7 +32,7 @@ public class ChatService {
     }
 
 
-    public ChatMessage sendMessage(ChatMessage chatMessage){
+    public ChatMessage saveMessage(ChatMessage chatMessage){
         ChatMessage saved = messageRepository.save(chatMessage);
         return saved;
     }
