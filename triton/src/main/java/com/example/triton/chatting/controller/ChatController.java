@@ -10,14 +10,17 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,6 +52,9 @@ public class ChatController {
         System.out.println(chatList.size());
 
         model.addAttribute("chatList", chatList);
+
+        List<SiteUser> volunteers = userRepository.findByUsertype("volunteer");
+        model.addAttribute("volunteers", volunteers);
         return "main-senior";
     }
 
@@ -85,5 +91,20 @@ public class ChatController {
         model.addAttribute("existingMes", existingMes);
         model.addAttribute("uid", uid);
         return "chat_test/chatting_draft";
+    }
+
+    @PostMapping("/{vid}/newChat/{agedId}")
+    public String newChat(@PathVariable("vid") Long vid, @PathVariable("agedId") Long agedId){
+        Chatting chatting = new Chatting();
+        chatting.setVid(vid);
+        chatting.setAgedid(agedId);
+        SiteUser user1 = userRepository.findById(vid).get();
+        SiteUser user2 = userRepository.findByUid(agedId).get();
+        chatting.setChatName(user1 + ", " + user2);
+        chatService.newChat(chatting);
+
+
+
+        return "redirect:/main/senior";
     }
 }
