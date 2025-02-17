@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Chat</title>
+    <link rel="stylesheet" href="/styles/chat.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="chat-container">
+    <h1>Gemini Chat</h1>
+    <form id="chat-form">
+        <label for="message">메시지를 입력하세요:</label>
+        <input type="text" id="message" name="message" required>
+        <button type="submit">전송</button>
+    </form>
+
+    <h2>응답:</h2>
+    <p id="response"></p>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("#chat-form").submit(function(event) {
+            event.preventDefault(); // 폼의 기본 제출 동작 방지
+
+            var userMessage = $("#message").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/chat",
+                contentType: "application/json",
+                data: JSON.stringify({ message: userMessage }),
+                success: function(response) {
+                    $("#response").text(response["vertexai(gemini) 응답"]);
+                },
+                error: function() {
+                    $("#response").text("에러 발생! 다시 시도하세요.");
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
