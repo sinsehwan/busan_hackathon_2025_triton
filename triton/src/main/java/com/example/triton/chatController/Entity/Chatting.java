@@ -11,18 +11,9 @@ public class Chatting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer cId;
+    private Long cid;
     private String chatName;
-    private Integer vId;
-    private Integer agedId;
-
-    public Chatting(String chatName, Integer vId, Integer agedId){
-        this.vId = vId;
-        this.agedId = agedId;
-    }
-
-    public Chatting() {
-
-    }
+    private Long vid;
+    private Long agedid;
 
 }
