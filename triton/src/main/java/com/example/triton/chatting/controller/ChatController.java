@@ -2,13 +2,10 @@ package com.example.triton.chatting.controller;
 
 import com.example.triton.chatting.Entity.ChatMessage;
 import com.example.triton.chatting.Entity.Chatting;
-import com.example.triton.chatting.repository.ChatMessageRepository;
-import com.example.triton.chatting.repository.ChatRepository;
 import com.example.triton.chatting.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,14 +44,16 @@ public class ChatController {
     @MessageMapping("/{cid}/sendMessage/{senderId}")
     public void sendMessage(@DestinationVariable("cid") Long cid, @DestinationVariable("senderId") Long senderId, String message){
         String destination = "/topic/messages/" + cid;
-        // 메시지 broadcast 위해 전송.
-        messagingTemplate.convertAndSend(destination, message);
         ChatMessage chatMessage = new ChatMessage();
-        //DB에 메시지 추가
         chatMessage.setMessage(message);
-        chatMessage.setCid(cid);
+        chatMessage.setChatId(cid);
         chatMessage.setSenderId(senderId);
-        chatService.saveMessage(chatMessage);
+        // 메시지 broadcast 위해 전송.
+        messagingTemplate.convertAndSend(destination, chatMessage);
+        //DB에 메시지 추가
+        ChatMessage result = chatService.saveMessage(chatMessage);
+        System.out.println(result.getChatId());
+
     }
 
     /**
@@ -68,6 +67,7 @@ public class ChatController {
     public String chatting(@PathVariable("uid") Long uid, @PathVariable("cid") Long cid, Model model){
         List<ChatMessage> existingMes = chatService.getMessages(cid);
         model.addAttribute("existingMes", existingMes);
-        return "chat_test/chatting";
+        model.addAttribute("uid", uid);
+        return "chat_test/chatting_draft";
     }
 }
