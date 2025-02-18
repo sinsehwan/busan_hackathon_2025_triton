@@ -8,27 +8,17 @@
 </head>
 <body>
     <div class="nav-container">
-        <button class="nav-button" onclick="showVolunteers()">자원봉사자 찾기</button>
+        <button class="nav-button" onclick="window.location.href='/logout'">로그아웃</button>
         <button class="nav-button middle-button" onclick="showChatRoom()">우편함</button>
-        <button class="nav-button modal-btn" data-target="modal-example">문제등록</button>
+        <button class="nav-button modal-btn" data-target="modal-example">도움이 필요해요</button>
     </div>
-
 
     <!-- Volunteer List Section -->
     <div id="volunteerSection" class="container">
         <div class="container">
-            <div th:each="help : ${helps}" class="card" onclick="window.location.href='/welcome'">
-                <div class="card-title" th:text="${help.username}"></div>
-                <div class="card-text" th:text="${help.description}"></div>
-
-                <!-- 태그 리스트 -->
-                <div class="tag-container">
-                    <span th:if="${help.tag1}" class="badge tag-health">건강</span>
-                    <span th:if="${help.tag2}" class="badge tag-counseling">상담</span>
-                    <span th:if="${help.tag3}" class="badge tag-living">생활</span>
-                    <span th:if="${help.tag4}" class="badge tag-education">교육</span>
-                    <span th:if="${help.tag5}" class="badge tag-mobility">이동</span>
-                </div>
+            <div th:each="assist : ${assists}" class="card" th:attr="onclick=|redirectToConnection('${assist.username}')|">
+                <div class="card-title" th:text="${assist.username}"></div>
+                <div class="card-text" th:text="${assist.description}"></div>
             </div>
         </div>
     </div>
@@ -99,6 +89,27 @@
            //'on' class 제거
            modal.classList.remove('on');
        });
+
+        function sendRequest() {
+            const query = document.getElementById('query').value;
+            const prompt = "5개의 키워드[건강, 상담, 생활, 교육, 이동]가 주어집니다. 다음으로 입력되는 상황이나 말을 분석하고, 알맞은 키워드를 최대 3개 까지 정해서 공백을 두고 키워드만 출력하세요. 억지로 키워드를 끼워 맞춰서는 안됩니다.";  // 추가할 프롬프트 정의
+
+            const finalQuery = prompt + " " + query;  // 프롬프트와 입력된 값을 결합
+
+            // 실제 API 호출
+            fetch(`http://localhost:8090/api/gemini/completion?text=${encodeURIComponent(finalQuery)}`)
+                .then(response => response.text())  // 응답을 텍스트로 처리
+                .then(data => {
+                    document.getElementById('response').innerText = data;  // 응답을 페이지에 표시
+                })
+                .catch(error => {
+                    document.getElementById('response').innerText = '에러 발생: ' + error;  // 에러 처리
+                });
+            }
+
+                function redirectToConnection(username) {
+                window.location.href = '/connection/senior?username=' + encodeURIComponent(username);
+       }
     </script>
 </body>
 </html>

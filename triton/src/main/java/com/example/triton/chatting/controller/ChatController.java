@@ -1,5 +1,7 @@
 package com.example.triton.chatting.controller;
 
+import com.example.triton.assist.AssistEntity;
+import com.example.triton.assist.AssistService;
 import com.example.triton.chatting.Entity.ChatMessage;
 import com.example.triton.chatting.Entity.Chatting;
 import com.example.triton.chatting.service.ChatService;
@@ -42,6 +44,9 @@ public class ChatController {
     @Autowired
     private HelpService helpService;
 
+    @Autowired
+    private AssistService assistService;
+
     @GetMapping("/main/senior")
     public String chatMain(Model model){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -65,6 +70,9 @@ public class ChatController {
 
         List<HelpEntity> helps = helpService.getAllHelps();
         model.addAttribute("helps", helps);
+
+        List<AssistEntity> assists = assistService.getAllAssists();
+        model.addAttribute("assists", assists);
 
         return "main-senior";
     }
@@ -93,7 +101,7 @@ public class ChatController {
         List<HelpEntity> helps = helpService.getAllHelps();
         model.addAttribute("helps", helps);
 
-        return "main-senior";
+        return "main-volunteer";
     }
 
     /**

@@ -8,9 +8,9 @@
 </head>
 <body>
     <div class="nav-container">
-        <button class="nav-button" onclick="showVolunteers()">자원봉사자 찾기</button>
+        <button class="nav-button" onclick="window.location.href='/logout'">로그아웃</button>
         <button class="nav-button middle-button" onclick="showChatRoom()">우편함</button>
-        <button class="nav-button modal-btn" data-target="modal-example">문제등록</button>
+        <button class="nav-button modal-btn" data-target="modal-example">재능이 필요해요</button>
     </div>
 
 
@@ -118,7 +118,7 @@
 
        function sendRequest() {
             const query = document.getElementById('query').value;
-            const prompt = "5개의 키워드[건강, 상담, 생활, 교육, 이동]가 주어집니다. 다음으로 입력되는 상황이나 말을 분석하고, 알맞은 키워드를 최대 3개 까지 정해서 공백을 두고 키워드만 출력하세요. 억지로 키워드를 끼워 맞춰서는 안됩니다.";  // 추가할 프롬프트 정의
+            const prompt = "노인들의 사회진출 목적으로 재능 기부가 가능한 요건들이 주어집니다. 다음으로 주어지는 요건을 분석하여 해당 항목을 수행하기 추천하는 노인을 관련된 내용을 아주 짧게 감탄문으로 제공하세요. 기분이 나쁘지 않을 수 있도록 '노인'이라는 단어는 뺴도록 하세요.";  // 추가할 프롬프트 정의
 
             const finalQuery = prompt + " " + query;  // 프롬프트와 입력된 값을 결합
 
@@ -134,7 +134,7 @@
        }
 
         function redirectToConnection(username) {
-        window.location.href = '/connection?username=' + encodeURIComponent(username);
+        window.location.href = '/connection/volunteer?username=' + encodeURIComponent(username);
     }
     </script>
 </body>
