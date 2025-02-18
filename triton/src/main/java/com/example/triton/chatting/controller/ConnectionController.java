@@ -23,7 +23,7 @@ public class ConnectionController {
     private ChatRepository chatRepository;
 
 
-    @GetMapping("/connection")
+    @GetMapping("/connection/volunteer")
     public String connectionPage(@RequestParam String username, Model model) {
         model.addAttribute("username", username);
 
@@ -46,5 +46,30 @@ public class ConnectionController {
         chatRepository.save(chatting);
 
         return "redirect:/main/volunteer"; // connection.html로 이동
+    }
+
+    @GetMapping("/connection/senior")
+    public String connectionPageVol(@RequestParam String username, Model model) {
+        model.addAttribute("username", username);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String seniorUsername = ((UserDetails) principal).getUsername();
+
+        SiteUser user1 = userRepository.findByUsername(username);
+        Long uid1 = user1.getUId();
+
+        SiteUser user2 = userRepository.findByUsername(seniorUsername);
+        Long uid2 = user2.getUId();
+
+        Chatting chatting = new Chatting();
+
+        chatting.setVid(uid1);
+        chatting.setAgedid(uid2);
+        chatting.setChatName(username + ", " + seniorUsername);
+
+        chatRepository.save(chatting);
+
+        return "redirect:/main/senior"; // connection.html로 이동
     }
 }

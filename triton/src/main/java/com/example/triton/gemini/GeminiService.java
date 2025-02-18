@@ -1,5 +1,6 @@
 package com.example.triton.gemini;
 
+import com.example.triton.assist.AssistService;
 import com.example.triton.help.HelpEntity;
 import com.example.triton.help.HelpRepository;
 import com.example.triton.help.HelpService;
@@ -23,6 +24,9 @@ public class GeminiService {
     @Autowired
     private HelpService helpService;
 
+    @Autowired
+    private AssistService assistService;
+
     private GeminiResponse getCompletion(GeminiRequest request) {
         return geminiInterface.getCompletion(GEMINI_PRO, request);
     }
@@ -39,7 +43,12 @@ public class GeminiService {
                         .map(GeminiResponse.TextPart::getText))
                 .orElse(null);
 
-        helpService.saveHelpEntity(text, result);
+        if(text.startsWith("5개의 키워드")) {
+            helpService.saveHelpEntity(text, result);
+        }
+        else{
+            assistService.saveAssistEntity(text, result);
+        }
         return result;
     }
 }
